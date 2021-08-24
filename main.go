@@ -40,6 +40,6 @@ func main() {
 		log.Panicln(err)
 	}
 
-	scheduler.Every(uint64(duration)).Seconds().Do(backup)
+	scheduler.Every(uint64(duration)).Days().Do(backup)
 	<-scheduler.Start()
 }

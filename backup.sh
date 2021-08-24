@@ -17,7 +17,7 @@ mkdir -p $backupfolder
 if sudo -u postgres pg_dump $db_name > $sqlfile ; then
    echo 'Sql dump created'
 else
-   echo $backupfolder $db_name $keep_day
+   echo 'pg_dump return non-zero code' 
    exit
 fi
 
