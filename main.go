@@ -17,6 +17,7 @@ func backup() {
 
 	res, err := executor.ExecuteBash(
 		os.Getenv("EXE"),
+		"-h", os.Getenv("HOST"),
 		"-d", os.Getenv("DB"),
 		"-f", os.Getenv("DIR"),
 		"-k", os.Getenv("KEEP"),

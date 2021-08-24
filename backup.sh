@@ -1,7 +1,8 @@
 # Flag
-while getopts d:f:k: flag
+while getopts h:d:f:k: flag
 do
    case "${flag}" in
+      h) host_name=${OPTARG};;
       d) db_name=${OPTARG};;
       f) backupfolder=${OPTARG};;
       k) keep_day=${OPTARG};;
@@ -14,7 +15,7 @@ sqlfile=$backupfolder/all-database-$(date +%d-%m-%Y_%H-%M-%S).sql
 mkdir -p $backupfolder
 
 # Create a backup
-if sudo -u postgres pg_dump $db_name > $sqlfile ; then
+if sudo pg_dump -U postgres -h $host_name $db_name > $sqlfile ; then
    echo 'Sql dump created'
 else
    echo 'pg_dump return non-zero code' 

@@ -1,6 +1,8 @@
-FROM golang:1.13.0
+FROM golang:1.17.0-alpine3.13
 
-RUN apt-get update && apt-get install -y
+RUN apk update && apk add bash
+RUN apk add postgresql
+RUN set -ex && apk --no-cache add sudo
 
 WORKDIR /app/backup-scheduler
 

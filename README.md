@@ -7,7 +7,10 @@ This is a simple scheduler that allow to automate repetitive task such as daily 
 
 ### Prerequisites
 1. Any version of Docker.
-2. .env file, we already provide .env.example as example.
+2. Any version of Golang.
+3. 'make' compiler.
+4. .env file, we already provide .env.example as example.
+5. Set all method at pg_hba.conf to trust
 
 ### Execute
 1. Run Locally

@@ -7,3 +7,5 @@ services:
       - "8029:8029"
     env_file: 
       .env
+    volumes:
+      - ./static/:/app/backup_scheduler/static
