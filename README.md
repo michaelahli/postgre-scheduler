@@ -3,6 +3,8 @@
 ## Description
 This is a simple scheduler that allow to automate repetitive task such as daily database scheduling.
 
+![Demo This Project](./assets/img/demo.png)
+
 ## Usage
 
 ### Prerequisites
@@ -25,3 +27,10 @@ This is a simple scheduler that allow to automate repetitive task such as daily 
     ```
         make build
     ```
+
+### Transfer backup files
+
+Run this following command to transfer backup files from container to host.
+```
+    docker cp <containerId>:/file/path/within/container /host/path/target
+```
