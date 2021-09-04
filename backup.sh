@@ -9,7 +9,7 @@ do
    esac
 done
 
-sqlfile=$backupfolder/all-database-$(date +%d-%m-%Y_%H-%M-%S).sql
+sqlfile=$backupfolder/database-$(date +%d-%m-%Y).sql
 
 #create backup folder
 mkdir -p $backupfolder
