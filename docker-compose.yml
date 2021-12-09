@@ -2,6 +2,9 @@ version: "3.3"
 services: 
   backup_scheduler:
     container_name: backup_scheduler
+    build: 
+      context: .
+      dockerfile: Dockerfile
     image: backup_scheduler:latest
     ports:
       - "8029:8029"
