@@ -12,7 +12,6 @@ This is a simple scheduler that allow to automate repetitive task such as daily 
 2. 'bash' compiler.
 3. 'make' compiler.
 4. .env file, we already provide .env.example as example.
-5. Set all method at pg_hba.conf to trust
 
 ### Execute
 1. Run Locally

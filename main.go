@@ -29,11 +29,14 @@ func backup() {
 		"-d", os.Getenv("DB"),
 		"-f", os.Getenv("DIR"),
 		"-k", os.Getenv("KEEP"),
+		"-u", os.Getenv("USERNAME"),
+		"-p", os.Getenv("PASSWORD"),
 	)
 	if err != nil {
 		log.Fatalln("[ERROR]", err)
 	}
 
+	executor.ExecuteBash()
 	if os.Getenv("AWS_S3_BACKUP") == "true" {
 		_, err = s3session.UploadObjectbyFilePath(fmt.Sprintf("./static/database-%02d-%02d-%d.sql", day, int(month), year))
 		if err != nil {

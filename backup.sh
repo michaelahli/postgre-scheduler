@@ -6,6 +6,8 @@ do
       d) db_name=${OPTARG};;
       f) backupfolder=${OPTARG};;
       k) keep_day=${OPTARG};;
+      u) user_name=${OPTARG};;
+      p) password=${OPTARG};;
    esac
 done
 
@@ -15,7 +17,7 @@ sqlfile=$backupfolder/database-$(date +%d-%m-%Y).sql
 mkdir -p $backupfolder
 
 # Create a backup
-if sudo pg_dump -U postgres -h $host_name $db_name > $sqlfile ; then
+if pg_dump postgresql://$user_name:$password@$host_name:5432/$db_name > $sqlfile ; then
    echo 'Sql dump created'
 else
    echo 'pg_dump return non-zero code' 
