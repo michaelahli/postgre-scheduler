@@ -1,5 +1,5 @@
 # Flag
-while getopts h:d:f:k: flag
+while getopts h:d:f:k:u:p: flag
 do
    case "${flag}" in
       h) host_name=${OPTARG};;
