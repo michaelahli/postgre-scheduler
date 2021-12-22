@@ -5,14 +5,13 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/michaelahli/postgre-scheduler/cmd"
 	"github.com/michaelahli/postgre-scheduler/helper"
 	"github.com/michaelahli/postgre-scheduler/utils"
 
-	"github.com/jasonlvhit/gocron"
+	"github.com/go-co-op/gocron"
 )
 
 func backup() {
@@ -55,41 +54,23 @@ func cron(scheduler *gocron.Scheduler) error {
 		log.Fatalln(err)
 	}
 
-	isTimeSpecified, err := strconv.ParseBool(os.Getenv("IS_TIME_SPECIFIED"))
+	isUsingCronTime, err := strconv.ParseBool(os.Getenv("IS_USING_CRON_TIME"))
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	switch isTimeSpecified {
+	switch isUsingCronTime {
 	case true:
-		var (
-			splitTime    []int
-			timeSpecific = os.Getenv("TIME_SPECIFIC")
-			splitTimeStr = strings.Split(timeSpecific, " ")
-		)
-
-		for _, ststr := range splitTimeStr {
-			stint, err := strconv.Atoi(ststr)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			splitTime = append(splitTime, stint)
+		cronTimeSpecific := os.Getenv("CRON_TIME")
+		_, err := scheduler.Cron(cronTimeSpecific).Do(backup)
+		if err != nil {
+			log.Fatalln(err)
 		}
-		t := time.Date(
-			splitTime[0],
-			time.Month(splitTime[1]),
-			splitTime[2],
-			splitTime[3],
-			splitTime[4],
-			splitTime[5],
-			splitTime[6],
-			time.UTC,
-		)
-
-		scheduler.Every(uint64(duration)).Day().From(&t).Do(backup)
-
 	default:
-		scheduler.Every(uint64(duration)).Days().Do(backup)
+		_, err := scheduler.Every(uint64(duration)).Days().Do(backup)
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 
 	return nil
@@ -99,8 +80,8 @@ func main() {
 	config := helper.New()
 	config.SetUp()
 
-	scheduler := gocron.NewScheduler()
+	scheduler := gocron.NewScheduler(time.UTC)
 
 	cron(scheduler)
-	<-scheduler.Start()
+	scheduler.StartBlocking()
 }
